@@ -32,8 +32,17 @@
             <div class="inline-flex p-3 rounded-2xl bg-teal-50 border border-teal-100 mb-2">
                 <img src="/images/smartedu_logo.png" alt="SmartEdu Logo" class="h-12 w-auto object-contain">
             </div>
-            <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Portal CMS Admin</h1>
-            <p class="text-xs text-slate-500 font-medium">Masuk untuk mengelola modul fitur, branding, & pengaturan landing page SmartEdu.</p>
+            <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Portal SIM & E-Rapor SIT</h1>
+            <p class="text-xs text-slate-500 font-medium">Masuk untuk mengakses sistem E-Rapor Terpadu Kurikulum Merdeka, Wafa & 7 SKL JSIT.</p>
+        </div>
+
+        <!-- Credential Info Helper -->
+        <div class="p-3.5 bg-emerald-50/70 border border-emerald-200 rounded-2xl text-[11px] space-y-1 text-slate-700">
+            <p class="font-extrabold text-emerald-900 flex items-center gap-1.5">
+                <span>🔑</span> <span>Kredensial Login Default Yayasan:</span>
+            </p>
+            <p>Username: <strong class="text-emerald-900 font-mono bg-white px-1.5 py-0.5 rounded border border-emerald-200">admin</strong> (atau <span class="font-mono">admin@smartedu.test</span>)</p>
+            <p>Password: <strong class="text-emerald-900 font-mono bg-white px-1.5 py-0.5 rounded border border-emerald-200">p4l3mb4ng</strong></p>
         </div>
 
         <!-- Alert Error -->

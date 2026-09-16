@@ -146,8 +146,9 @@
                 <a href="#harga" class="hover:text-teal-700 transition-colors">Paket Harga & Lisensi</a>
                 @endif
                 <a href="#faq" class="hover:text-teal-700 transition-colors">Pertanyaan Umum</a>
-                <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-all">
-                    <span>Akses CMS Admin</span>
+                <a href="{{ route('admin.dashboard') }}" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs flex items-center gap-2 shadow-md shadow-emerald-700/20 transition-all transform hover:scale-105">
+                    <span>🖨️ Masuk Aplikasi E-Rapor</span>
+                    <span>→</span>
                 </a>
             </nav>
 
@@ -199,6 +200,17 @@
                 <p class="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed font-normal">
                     {{ $settings['hero_desc'] }}
                 </p>
+
+                <!-- Hero Action Buttons -->
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+                    <a href="{{ route('admin.reports.index') }}" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-700/25 flex items-center gap-2 transition transform hover:-translate-y-0.5">
+                        <span>🖨️ Buka Aplikasi E-Rapor</span>
+                        <span>→</span>
+                    </a>
+                    <a href="{{ route('login') }}" class="px-5 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs sm:text-sm shadow-md flex items-center gap-2 transition">
+                        <span>🔐 Login Portal Sekolah</span>
+                    </a>
+                </div>
 
                 <!-- Stats Summary (Neat responsive grid) -->
                 <div class="pt-4 grid grid-cols-3 gap-2.5 sm:gap-4 border-t border-slate-200">
