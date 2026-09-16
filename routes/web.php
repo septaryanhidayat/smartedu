@@ -130,6 +130,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/settings', [CmsController::class, 'updateSettings'])->name('settings.update');
             Route::post('/cms/import-wordpress', [CmsController::class, 'importWordPress'])->name('cms.import-wordpress');
             Route::post('/cms/auto-categorize', [CmsController::class, 'autoCategorizeContent'])->name('cms.auto-categorize');
+            
+            // Permohonan Layanan Publik (Kunjungan, Kerjasama, Sewa)
+            Route::get('/public-services', [CmsController::class, 'publicServiceRequests'])->name('public-services.index');
+            Route::post('/public-services/{id}/status', [CmsController::class, 'updatePublicServiceStatus'])->name('public-services.update-status');
+            Route::delete('/public-services/{id}', [CmsController::class, 'destroyPublicServiceRequest'])->name('public-services.destroy');
         });
 
         // 2c. Pengaturan Global Portal Yayasan, Manajemen Akun, Lisensi Sales, Modul, & Pusat Kontrol (Super Admin & Ketua Yayasan)
@@ -172,6 +177,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::middleware('role:SUPER_ADMIN,HEADMASTER,TEACHER,MUSYRIF_ASRAMA')->group(function () {
             Route::get('/bpi', [BpiController::class, 'index'])->name('bpi.index');
             Route::post('/bpi', [BpiController::class, 'store'])->name('bpi.store');
+            Route::delete('/bpi/{id}', [BpiController::class, 'destroy'])->name('bpi.destroy');
         });
 
         // 4. Modul 7 & 17: HRIS, Database SDM Pegangan Yayasan & Aplikasi Mobile (Super Admin, Ketua Yayasan, Kepala Sekolah, Bendahara, TU)
@@ -185,6 +191,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             // Payroll & Gaji
             Route::get('/payroll', [HrisPayrollController::class, 'index'])->name('payroll.index');
             Route::post('/payroll/generate', [HrisPayrollController::class, 'generate'])->name('payroll.generate');
+            Route::delete('/payroll/{id}', [HrisPayrollController::class, 'destroy'])->name('payroll.destroy');
             
             // Aplikasi Mobile SDM & Biometrik Wajah & Geofence GPS
             Route::get('/mobile-hris', [MobileHrisAdminController::class, 'index'])->name('mobile.index');
@@ -197,6 +204,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::middleware('role:SUPER_ADMIN,HEADMASTER,STAFF_TU,PANITIA_PPDB')->group(function () {
             Route::get('/cbt', [CbtPpdbController::class, 'cbtIndex'])->name('cbt.index');
             Route::post('/cbt', [CbtPpdbController::class, 'storeCbtExam'])->name('cbt.store');
+            Route::delete('/cbt/{id}', [CbtPpdbController::class, 'destroyExam'])->name('cbt.destroy');
             Route::post('/cbt/questions', [CbtPpdbController::class, 'storeQuestion'])->name('cbt.questions.store');
             Route::get('/ppdb-admin', [CbtPpdbController::class, 'ppdbIndex'])->name('ppdb-admin.index');
             Route::post('/ppdb-admin/{id}/status', [CbtPpdbController::class, 'updatePpdbStatus'])->name('ppdb-admin.update-status');
@@ -207,24 +215,28 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::middleware('role:SUPER_ADMIN,YAYASAN_CHAIRMAN,HEADMASTER,PETUGAS_SARPRAS')->group(function () {
             Route::get('/sarpras', [SarprasController::class, 'index'])->name('sarpras.index');
             Route::post('/sarpras', [SarprasController::class, 'store'])->name('sarpras.store');
+            Route::delete('/sarpras/{id}', [SarprasController::class, 'destroy'])->name('sarpras.destroy');
         });
 
         // 7. Modul 10: Perpustakaan Digital E-Library (Super Admin, Kepala Sekolah, Pustakawan, Guru)
         Route::middleware('role:SUPER_ADMIN,HEADMASTER,PETUGAS_PERPUS,TEACHER')->group(function () {
             Route::get('/library', [LibraryController::class, 'index'])->name('library.index');
             Route::post('/library', [LibraryController::class, 'store'])->name('library.store');
+            Route::delete('/library/{id}', [LibraryController::class, 'destroy'])->name('library.destroy');
         });
 
         // 8. Modul 11: E-Learning LMS (Super Admin, Kepala Sekolah, Guru)
         Route::middleware('role:SUPER_ADMIN,HEADMASTER,TEACHER')->group(function () {
             Route::get('/lms', [LmsController::class, 'index'])->name('lms.index');
             Route::post('/lms', [LmsController::class, 'store'])->name('lms.store');
+            Route::delete('/lms/{id}', [LmsController::class, 'destroy'])->name('lms.destroy');
         });
 
         // 9. Modul 8: BK Online & Poin Siswa (Super Admin, Kepala Sekolah, Guru BK, Guru)
         Route::middleware('role:SUPER_ADMIN,HEADMASTER,GURU_BK,TEACHER')->group(function () {
             Route::get('/bk', [BkController::class, 'index'])->name('bk.index');
             Route::post('/bk', [BkController::class, 'store'])->name('bk.store');
+            Route::delete('/bk/{id}', [BkController::class, 'destroy'])->name('bk.destroy');
         });
 
         // 10. Modul 1: Master Data Management (Super Admin, Kepala Sekolah, Tata Usaha)
@@ -262,7 +274,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/journals/{id}', [AcademicController::class, 'destroyJournal'])->name('journals.destroy');
             Route::get('/grades', [AcademicController::class, 'grades'])->name('grades');
             Route::delete('/grades/{id}', [AcademicController::class, 'destroyGrade'])->name('grades.destroy');
-            Route::post('/grades', [AcademicController::class, 'storeGrade'])->name('grades.store');
             Route::post('/grades/batch', [AcademicController::class, 'batchStoreGrades'])->name('grades.batch.store');
             Route::post('/grades/quran', [AcademicController::class, 'storeQuranGrade'])->name('grades.quran.store');
             Route::post('/grades/quran/batch', [AcademicController::class, 'batchStoreQuran'])->name('grades.quran.batch.store');
@@ -289,16 +300,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/extracurriculars/delete/{id}', [AcademicController::class, 'deleteExtracurricular'])->name('extracurriculars.delete');
 
             Route::post('/p5/save', [AcademicController::class, 'saveProjectP5'])->name('p5.save');
-            Route::post('/p5/delete/{id}', [AcademicController::class, 'deleteProjectP5'])->name('p5.delete');
-
             Route::get('/report-card/{studentId}', [AcademicController::class, 'reportCard'])->name('report-card');
             Route::get('/leger/export', [AcademicController::class, 'exportLeger'])->name('leger.export');
 
             // AI Smart Assistant (Google Gemini AI Studio)
             Route::post('/ai/generate-homeroom', [AcademicController::class, 'aiGenerateHomeroom'])->name('ai.homeroom');
+            Route::post('/ai/generate-homeroom-alias', [AcademicController::class, 'aiGenerateHomeroom'])->name('ai.generate.homeroom');
             Route::post('/ai/generate-narrative', [AcademicController::class, 'aiGenerateNarrative'])->name('ai.narrative');
+            Route::post('/ai/generate-narrative-alias', [AcademicController::class, 'aiGenerateNarrative'])->name('ai.generate.narrative');
             Route::post('/ai/generate-quran', [AcademicController::class, 'aiGenerateQuran'])->name('ai.quran');
-            Route::post('/ai/analyze-class', [AcademicController::class, 'aiAnalyzeClass'])->name('ai.analyze-class');
+            Route::post('/ai/generate-quran-alias', [AcademicController::class, 'aiGenerateQuran'])->name('ai.generate.quran');
+            Route::match(['get', 'post'], '/ai/analyze-class', [AcademicController::class, 'aiAnalyzeClass'])->name('ai.analyze-class');
+            Route::match(['get', 'post'], '/ai/analyze-class-alias', [AcademicController::class, 'aiAnalyzeClass'])->name('ai.analyze.class');
 
             // Manajemen Pengguna Unit (Khusus Kepala Sekolah & Super Admin)
             Route::post('/users/save', [AcademicController::class, 'saveUnitUser'])->name('users.save');
@@ -333,7 +346,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::prefix('canteen')->name('canteen.')->middleware('role:SUPER_ADMIN,STAFF_KEUANGAN,PETUGAS_KANTIN')->group(function () {
             Route::get('/', [CanteenController::class, 'index'])->name('index');
             Route::post('/outlets', [CanteenController::class, 'storeOutlet'])->name('outlets.store');
+            Route::delete('/outlets/{id}', [CanteenController::class, 'destroyOutlet'])->name('outlets.destroy');
             Route::post('/products', [CanteenController::class, 'storeProduct'])->name('products.store');
+            Route::delete('/products/{id}', [CanteenController::class, 'destroyProduct'])->name('products.destroy');
             Route::post('/checkout', [CanteenController::class, 'checkoutPos'])->name('checkout');
         });
 

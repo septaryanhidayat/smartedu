@@ -6,21 +6,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Subject extends Model
+class Attendance extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'school_id',
-        'code',
-        'name',
-        'category',
-        'group',
-        'passing_grade',
+        'student_id',
+        'employee_id',
+        'date',
+        'time_in',
+        'time_out',
+        'status',
+        'method',
+        'notes',
     ];
 
     protected $casts = [
-        'passing_grade' => 'float',
+        'date' => 'date',
     ];
 
     public function school(): BelongsTo
@@ -28,13 +31,13 @@ class Subject extends Model
         return $this->belongsTo(School::class);
     }
 
-    public function getGroupAttribute(): ?string
+    public function student(): BelongsTo
     {
-        return $this->category;
+        return $this->belongsTo(Student::class);
     }
 
-    public function setGroupAttribute($value)
+    public function employee(): BelongsTo
     {
-        $this->attributes['category'] = $value;
+        return $this->belongsTo(Employee::class);
     }
 }

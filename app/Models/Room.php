@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Subject extends Model
+class Room extends Model
 {
     use HasFactory;
 
@@ -15,12 +15,9 @@ class Subject extends Model
         'code',
         'name',
         'category',
-        'group',
-        'passing_grade',
-    ];
-
-    protected $casts = [
-        'passing_grade' => 'float',
+        'capacity',
+        'location_building',
+        'building',
     ];
 
     public function school(): BelongsTo
@@ -28,13 +25,13 @@ class Subject extends Model
         return $this->belongsTo(School::class);
     }
 
-    public function getGroupAttribute(): ?string
+    public function getBuildingAttribute(): ?string
     {
-        return $this->category;
+        return $this->location_building;
     }
 
-    public function setGroupAttribute($value)
+    public function setBuildingAttribute($value)
     {
-        $this->attributes['category'] = $value;
+        $this->attributes['location_building'] = $value;
     }
 }
