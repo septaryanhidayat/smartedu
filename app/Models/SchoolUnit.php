@@ -10,28 +10,9 @@ class SchoolUnit extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'code',
-        'level',
-        'npsn',
-        'address',
-        'phone',
-        'email',
-        'website',
-        'logo_path',
-        'letterhead_path',
-        'stamp_path',
-        'principal_name',
-        'principal_nip',
-        'principal_signature_path',
-        'quran_coordinator_name',
-        'quran_coordinator_nip',
-        'quran_coordinator_signature_path',
-        'report_city',
-        'report_date',
-        'print_settings',
-    ];
+    protected $table = 'schools';
+
+    protected $guarded = [];
 
     protected function casts(): array
     {

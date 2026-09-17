@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "SmartEdu: Serve Laravel",
+            "type": "shell",
+            "command": "php artisan serve --port=8000",
+            "problemMatcher": [],
+            "group": "build",
+            "isBackground": true
+        },
+        {
+            "label": "SmartEdu: Vite Dev Server",
+            "type": "shell",
+            "command": "npm run dev",
+            "problemMatcher": [],
+            "group": "build",
+            "isBackground": true
+        },
+        {
+            "label": "SmartEdu: Run Database Migrations",
+            "type": "shell",
+            "command": "php artisan migrate --force",
+            "problemMatcher": []
+        },
+        {
+            "label": "SmartEdu: Seed Database",
+            "type": "shell",
+            "command": "php artisan db:seed --force",
+            "problemMatcher": []
+        },
+        {
+            "label": "SmartEdu: Optimize & Clear Cache",
+            "type": "shell",
+            "command": "php artisan optimize:clear",
+            "problemMatcher": []
+        }
+    ]
+}

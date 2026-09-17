@@ -318,6 +318,26 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/users/delete/{id}', [AcademicController::class, 'deleteUnitUser'])->name('users.delete');
         });
 
+        // 11b. Modul Cetak E-Rapor & Leger SIT
+        Route::prefix('reports')->name('reports.')->middleware('role:SUPER_ADMIN,HEADMASTER,STAFF_TU,TEACHER')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\ReportPrintController::class, 'index'])->name('index');
+            Route::get('/print-academic/{id}', [\App\Http\Controllers\Admin\ReportPrintController::class, 'printAcademic'])->name('print.academic');
+            Route::get('/print-quran/{id}', [\App\Http\Controllers\Admin\ReportPrintController::class, 'printQuran'])->name('print.quran');
+            Route::get('/print-character/{id}', [\App\Http\Controllers\Admin\ReportPrintController::class, 'printCharacter'])->name('print.character');
+            Route::get('/print-bundle/{id}', [\App\Http\Controllers\Admin\ReportPrintController::class, 'printBundle'])->name('print.bundle');
+            Route::get('/print-leger/{classroomId}', [\App\Http\Controllers\Admin\ReportPrintController::class, 'printLeger'])->name('print.leger');
+        });
+
+        // 11c. Route Alias Kompatibilitas E-Rapor Akademik
+        Route::prefix('grades')->name('grades.')->middleware('role:SUPER_ADMIN,HEADMASTER,STAFF_TU,TEACHER')->group(function () {
+            Route::get('/academic', [AcademicController::class, 'grades'])->name('academic');
+            Route::post('/academic/save', [AcademicController::class, 'batchStoreGrades'])->name('academic.save');
+            Route::get('/quran', [AcademicController::class, 'grades'])->name('quran');
+            Route::get('/character', [AcademicController::class, 'grades'])->name('character');
+        });
+
+        Route::get('/report-settings', [AcademicController::class, 'grades'])->name('report-settings.index');
+
         // 12. Modul 3: Absensi Realtime RFID & QR Code (Super Admin, Kepala Sekolah, TU, Guru, Guru BK)
         Route::prefix('attendance')->name('attendance.')->middleware('role:SUPER_ADMIN,HEADMASTER,STAFF_TU,TEACHER,GURU_BK')->group(function () {
             Route::get('/', [AttendanceController::class, 'index'])->name('index');

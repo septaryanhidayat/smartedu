@@ -2628,7 +2628,7 @@
     </script>
 
     <!-- Robbani AI Assistant Chat Widget -->
-    @include('components.chat-ai-widget')
+    @includeIf('components.chat-ai-widget')
 
 
     <!-- Universal Smooth Scroll Reveal IntersectionObserver -->

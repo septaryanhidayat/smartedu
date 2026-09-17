@@ -27,6 +27,11 @@ class Classroom extends Model
         return $this->belongsTo(School::class);
     }
 
+    public function schoolUnit(): BelongsTo
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
+
     public function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);
